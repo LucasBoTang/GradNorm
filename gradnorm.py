@@ -1,14 +1,16 @@
-def gradNorm(net, layer, alpha, dataloader, num_epochs, lr):
+def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
     """
     Args:
         net (nn.Module): a multitask network
         layer (nn.Module): subset of the full network layers where appling GradNorm on the weights
         alpha (float): hyperparameter of restoring force
         dataloader: (DataLoader): training dataloader
-        epochs (int): number of epochs
+        num_epochs (int): number of epochs
+        lr1 （float):  learning rate of multitask loss
+        lr2 （float):  learning rate of weights
     """
     # set optimizer
-    optimizer1 = torch.optim.Adam(net.parameters(), lr=lr)
+    optimizer1 = torch.optim.Adam(net.parameters(), lr=lr1)
     # start traning
     iters = 0
     net.train()
@@ -27,7 +29,7 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr):
                 weights = torch.ones_like(loss)
                 weights = torch.nn.Parameter(weights / weights.sum())
                 # set optimizer for weights
-                optimizer2 = torch.optim.Adam([weights], lr=lr)
+                optimizer2 = torch.optim.Adam([weights], lr=lr2)
                 # set L(0)
                 l0 = loss.detach()
             # compute the weighted loss
@@ -60,6 +62,6 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr):
             optimizer2.step()
             # renormalize weights
             weights = torch.nn.Parameter(weights / weights.sum())
-            optimizer2 = torch.optim.Adam([weights], lr=lr)
+            optimizer2 = torch.optim.Adam([weights], lr=lr2)
             # update iters
             iters += 1
