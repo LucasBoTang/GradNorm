@@ -1,4 +1,4 @@
-def GradNorm(net, layer, alpha, dataloader, num_epochs, lr):
+def gradNorm(net, layer, alpha, dataloader, num_epochs, lr):
     """
     Args:
         net (nn.Module): a multitask network
@@ -48,7 +48,7 @@ def GradNorm(net, layer, alpha, dataloader, num_epochs, lr):
             rt = loss_ratio / loss_ratio.mean()
             # compute the average gradient norm
             gw_avg = gw.mean().detach()
-            # compute the GradNorm loss
+            # compute the GradNorm loss 
             gradnorm_loss = torch.abs(gw - gw_avg * rt ** alpha).sum()
             # clear gradients of weights
             optimizer2.zero_grad()
@@ -60,5 +60,6 @@ def GradNorm(net, layer, alpha, dataloader, num_epochs, lr):
             optimizer2.step()
             # renormalize weights
             weights = torch.nn.Parameter(weights / weights.sum())
+            optimizer2 = torch.optim.Adam([weights], lr=lr)
             # update iters
             iters += 1
