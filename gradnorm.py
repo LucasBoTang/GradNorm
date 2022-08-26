@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# coding: utf-8
+"""
+Training with GradNorm Algorithm
+"""
+
+import torch
+
 def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
     """
     Args:
