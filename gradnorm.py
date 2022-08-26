@@ -53,7 +53,7 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
             gradnorm_loss = torch.abs(gw - gw_avg * rt ** alpha).sum()
             # clear gradients of weights
             optimizer2.zero_grad()
-            # backward pass for weigthted task loss
+            # backward pass for GradNorm
             gradnorm_loss.backward()
             # update model weights
             optimizer1.step()
