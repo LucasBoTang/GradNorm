@@ -17,7 +17,6 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
     for epoch in range(num_epochs):
         # load data
         for data in dataloader:
-            x, c, w, z = data
             # cuda
             if next(net.parameters()).is_cuda:
                 data = [d.cuda() for d in data]
