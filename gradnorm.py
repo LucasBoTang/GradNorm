@@ -40,7 +40,8 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
             if iters == 0:
                 # init weights
                 weights = torch.ones_like(loss)
-                weights = torch.nn.Parameter(weights / weights.sum())
+                weights = torch.nn.Parameter(weights)
+                T = weights.sum().detach()
                 # set optimizer for weights
                 optimizer2 = torch.optim.Adam([weights], lr=lr2)
                 # set L(0)
@@ -79,7 +80,8 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
             # update loss weights
             optimizer2.step()
             # renormalize weights
-            weights = torch.nn.Parameter(weights / weights.sum())
+            weights = (weights / weights.sum() * T).detach()
+            weights = torch.nn.Parameter(weights)
             optimizer2 = torch.optim.Adam([weights], lr=lr2)
             # update iters
             iters += 1
