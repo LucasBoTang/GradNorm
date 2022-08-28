@@ -25,7 +25,7 @@ class fcNet(nn.Module):
         self.fc3 = nn.Linear(dim_labels, dim_labels)
         self.fc4 = nn.Linear(dim_labels, dim_labels)
         # heads for multitask
-        self.heads = [nn.Linear(dim_labels, dim_labels) for _ in range(n_tasks)]
+        self.heads = nn.ModuleList([nn.Linear(dim_labels, dim_labels) for _ in range(n_tasks)])
         self.mse = nn.MSELoss()
 
     def forward(self, x, ys):
