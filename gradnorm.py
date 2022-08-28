@@ -57,16 +57,17 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
             rt = loss_ratio / loss_ratio.mean()
             # compute the average gradient norm
             gw_avg = gw.mean().detach()
-            # compute the GradNorm loss 
-            gradnorm_loss = torch.abs(gw - gw_avg * rt ** alpha).sum()
+            # compute the GradNorm loss
+            constant = (gw_avg * rt ** alpha).detach()
+            gradnorm_loss = torch.abs(gw - c).sum()
             # clear gradients of weights
             optimizer2.zero_grad()
             # backward pass for GradNorm
             gradnorm_loss.backward()
-            # update model weights
-            optimizer1.step()
             # update loss weights
             optimizer2.step()
+            # update model weights
+            optimizer1.step()
             # renormalize weights
             weights = torch.nn.Parameter(weights / weights.sum())
             optimizer2 = torch.optim.Adam([weights], lr=lr2)
