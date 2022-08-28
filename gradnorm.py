@@ -4,9 +4,10 @@
 Training with GradNorm Algorithm
 """
 
+import numpy as np
 import torch
 
-def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
+def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
     """
     Args:
         net (nn.Module): a multitask network
@@ -16,7 +17,12 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
         num_epochs (int): number of epochs
         lr1 （float):  learning rate of multitask loss
         lr2 （float):  learning rate of weights
+        log （bool):  flag of result log
     """
+    # init log
+    if log:
+        log_weights = []
+        log_loss = []
     # set optimizer
     optimizer1 = torch.optim.Adam(net.parameters(), lr=lr1)
     # start traning
@@ -39,6 +45,10 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
                 optimizer2 = torch.optim.Adam([weights], lr=lr2)
                 # set L(0)
                 l0 = loss.detach()
+            # log weights and loss
+            if log:
+                log_weights.append(weights.detach().cpu().numpy().copy())
+                log_loss.append(loss.detach().cpu().numpy().copy())
             # compute the weighted loss
             weighted_loss = weights @ loss
             # clear gradients of network
@@ -59,17 +69,20 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2):
             gw_avg = gw.mean().detach()
             # compute the GradNorm loss
             constant = (gw_avg * rt ** alpha).detach()
-            gradnorm_loss = torch.abs(gw - c).sum()
+            gradnorm_loss = torch.abs(gw - constant).sum()
             # clear gradients of weights
             optimizer2.zero_grad()
             # backward pass for GradNorm
             gradnorm_loss.backward()
-            # update loss weights
-            optimizer2.step()
             # update model weights
             optimizer1.step()
+            # update loss weights
+            optimizer2.step()
             # renormalize weights
             weights = torch.nn.Parameter(weights / weights.sum())
             optimizer2 = torch.optim.Adam([weights], lr=lr2)
             # update iters
             iters += 1
+    # get logs
+    if log:
+        return np.stack(log_weights), np.stack(log_loss), loss_ratio.detach().cpu().numpy()
