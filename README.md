@@ -65,8 +65,6 @@ net = fcNet(dim_features=250, dim_labels=100, n_tasks=2) # fc net with multiple 
 mtlnet = mtlNet(net) # multitask net with task loss
 ```
 
-### Adaptive Weights During Training for Each Task (10 Tasks)
+### Result (10 Tasks)
 
 <p align="center"><img width="75%" src="images/weight.png" /></p>
-
-

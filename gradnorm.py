@@ -10,8 +10,8 @@ import torch
 def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
     """
     Args:
-        net (nn.Module): a multitask network
-        layer (nn.Module): subset of the full network layers where appling GradNorm on the weights
+        net (nn.Module): a multitask network with task loss
+        layer (nn.Module): a layers of the full network where appling GradNorm on the weights
         alpha (float): hyperparameter of restoring force
         dataloader: (DataLoader): training dataloader
         num_epochs (int): number of epochs
