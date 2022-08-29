@@ -59,6 +59,8 @@ dataset = toyDataset(num_data=10000, dim_features=250, dim_labels=100, scalars=[
 
 A 4-layer fully-connected ReLU-activated network with 100 neurons per layer as a common trunk is used to train our toy example. A final affine transformation layer gives *T* final predictions.
 
+<p align="center"><img width="75%" src="images/model.png" /></p>
+
 ```python
 from model import fcNet, mtlNet
 net = fcNet(dim_features=250, dim_labels=100, n_tasks=2) # fc net with multiple heads
