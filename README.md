@@ -1,6 +1,6 @@
 # PyTorch GradNorm
 
-<p align="center"><img width="75%" src="images/gradnorm.png" /></p>
+<p align="center"><img width="90%" src="images/gradnorm.png" /></p>
 
 This is a PyTorch-based implementation of [GradNorm: Gradient normalization for adaptive loss balancing in deep multitask networks](http://proceedings.mlr.press/v80/chen18a.html), which is a gradient normalization algorithm that automatically balances training in deep multitask models by dynamically tuning gradient magnitudes.
 
