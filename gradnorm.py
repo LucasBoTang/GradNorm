@@ -41,15 +41,11 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
                 # init weights
                 weights = torch.ones_like(loss)
                 weights = torch.nn.Parameter(weights)
-                T = weights.sum().detach()
+                T = weights.sum().detach() # sum of weights
                 # set optimizer for weights
                 optimizer2 = torch.optim.Adam([weights], lr=lr2)
                 # set L(0)
                 l0 = loss.detach()
-            # log weights and loss
-            if log:
-                log_weights.append(weights.detach().cpu().numpy().copy())
-                log_loss.append(loss.detach().cpu().numpy().copy())
             # compute the weighted loss
             weighted_loss = weights @ loss
             # clear gradients of network
@@ -75,6 +71,12 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
             optimizer2.zero_grad()
             # backward pass for GradNorm
             gradnorm_loss.backward()
+            # log weights and loss
+            if log:
+                # weight for each task
+                log_weights.append(weights.detach().cpu().numpy().copy())
+                # task normalized loss
+                log_loss.append(loss_ratio.detach().cpu().numpy().copy())
             # update model weights
             optimizer1.step()
             # update loss weights
@@ -87,4 +89,4 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
             iters += 1
     # get logs
     if log:
-        return np.stack(log_weights), np.stack(log_loss)/l0.detach().cpu().numpy()
+        return np.stack(log_weights), np.stack(log_loss)
