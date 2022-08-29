@@ -69,4 +69,4 @@ mtlnet = mtlNet(net) # multitask net with task loss
 
 ### Result (10 Tasks)
 
-<p align="center"><img width="60%" src="images/weight.png" /></p>
+<p align="center"><img width="75%" src="images/weight.png" /></p>
