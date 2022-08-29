@@ -15,9 +15,9 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
         alpha (float): hyperparameter of restoring force
         dataloader: (DataLoader): training dataloader
         num_epochs (int): number of epochs
-        lr1 （float):  learning rate of multitask loss
-        lr2 （float):  learning rate of weights
-        log （bool):  flag of result log
+        lr1 （float): learning rate of multitask loss
+        lr2 （float): learning rate of weights
+        log （bool): flag of result log
     """
     # init log
     if log:
