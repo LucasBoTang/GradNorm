@@ -45,7 +45,7 @@ log_weights, log_loss = gradNorm(net=net, layer=net.fc4, alpha=0.12, dataloader=
 
 Consider *T* regression tasks trained using standard squared loss onto the functions:
 
-<p align="center"><img width="20%" src="images/data.png" /></p>
+<p align="center"><img width="25%" src="images/data.png" /></p>
 
 Inputs are dimension 250 and outputs dimension 100, while B and ε_i are constant matrices with their elements generated IID from N(0; 10) and N(0; 3:5), respectively. Each task therefore shares information in B but also contains task-specific information ε_i. The σ_i sets the scales of the outputs.
 
