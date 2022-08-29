@@ -87,4 +87,4 @@ def gradNorm(net, layer, alpha, dataloader, num_epochs, lr1, lr2, log=False):
             iters += 1
     # get logs
     if log:
-        return np.stack(log_weights), np.stack(log_loss), loss_ratio.detach().cpu().numpy()
+        return np.stack(log_weights), np.stack(log_loss)/l0.detach().cpu().numpy()
