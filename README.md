@@ -14,9 +14,8 @@ The toy example can be found at [**here**](https://github.com/LucasBoTang/GradNo
 
 ## Dependencies
 
-[PyTorch](https://pytorch.org/)
-
-[NumPy](https://numpy.org/)
+- [PyTorch](https://pytorch.org/)
+- [NumPy](https://numpy.org/)
 
 
 ## Usage
