@@ -23,7 +23,7 @@ The toy example can be found at [**here**](https://github.com/LucasBoTang/GradNo
 ### Parameters
 
 - net: a multitask network with task loss
-- layer: a layers of the network layers where appling GradNorm on the weights
+- layer: layers of the network layers where applying GradNorm on the weights
 - alpha: hyperparameter of restoring force
 - dataloader: training dataloader
 - num_epochs: number of epochs
@@ -39,17 +39,17 @@ log_weights, log_loss = gradNorm(net=mtlnet, layer=net.fc4, alpha=0.12, dataload
                                  num_epochs=100, lr1=1e-5, lr2=1e-4, log=False)
 ```
 
-## Toy Example (from Orignial Paper)
+## Toy Example (from Original Paper)
 
 ### Data
 
 Consider $T$ regression tasks trained using standard squared loss onto the functions:
 
 $$
-f_i (\mathbf{x}) = \sigma_i  \tanh \left( ( \mathbf{B} + \mathbf{\epslion}_i ) \mathbf{x} \right)
+f_i (\mathbf{x}) = \sigma_i  \tanh \left( ( \mathbf{B} + \mathbf{\epsilon}_i ) \mathbf{x} \right)
 $$
 
-Inputs are dimension 250 and outputs dimension 100, while $\mathbf{B}$ and $\mathbf{\epslion}_i$ are constant matrices with their elements generated IID from $N(0; 10)$ and $N(0; 3.5)$, respectively. Each task therefore shares information in B but also contains task-specific information ε_i. The σ_i sets the scales of the outputs.
+Inputs are dimension 250 and outputs dimension 100, while $\mathbf{B}$ and $\mathbf{\epsilon}_i$ are constant matrices with their elements generated IID from $N(0; 10)$ and $N(0; 3.5)$, respectively. Each task, therefore, shares information in B but also contains task-specific information $\mathbf{\epsilon}_i$. The $\sigma_i$ sets the scales of the outputs.
 
 ```python
 from data import toyDataset
